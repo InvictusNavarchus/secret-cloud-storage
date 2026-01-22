@@ -29,10 +29,10 @@ bucket_name = "secret-cloud-storage"  # Change if needed
 ### 3. Build Frontend
 
 ```bash
-bun run build:frontend
+bun run build
 ```
 
-This compiles the TypeScript frontend to JavaScript.
+This copies static assets and compiles TypeScript to the `public/` directory.
 
 ### 4. Test Deployment (Dry Run)
 
@@ -94,24 +94,25 @@ This will start a local Cloudflare Pages development server at `http://localhost
 
 To update your deployment:
 
-1. Make your changes
-2. Build frontend if changed: `bun run build:frontend`
+1. Make your changes in `src/frontend/` or `functions/`
+2. Build: `bun run build`
 3. Deploy: `bun run deploy`
 
 ## Architecture Notes
 
-This project uses **Cloudflare Pages** (not Workers) for a fullstack application:
+This project uses **Cloudflare Pages** for a fullstack application:
 
-- **Frontend**: Static assets in `/public` directory
-- **Backend**: Pages Functions in `/functions` directory with file-based routing
-  - `/functions/api/*` - API route handlers (thin routing layer)
-  - `/functions/_lib/*` - Shared business logic, types, and utilities (underscore prefix = not routed)
+- **Source**: `src/frontend/` contains frontend source (HTML, CSS, TypeScript)
+- **Build Output**: `public/` is generated from source (gitignored)
+- **Backend**: `functions/` directory with file-based routing
+  - `functions/api/*` - API route handlers (thin routing layer)
+  - `functions/_lib/*` - Shared business logic (underscore prefix = not routed)
 - **Storage**: R2 bucket binding
 
 Pages Functions automatically:
-- Serve static assets from `/public`
-- Route API requests based on `/functions` file structure
-- Ignore `_` prefixed folders (they're for shared code only)
+- Serve static assets from `public/` (build output)
+- Route API requests based on `functions/` file structure
+- Ignore `_` prefixed folders (for shared code only)
 - Handle both frontend and backend in a single deployment
 
 ## Troubleshooting

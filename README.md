@@ -26,32 +26,33 @@ A secure, personal cloud storage solution built with Cloudflare Pages and R2. De
 
 ```
 secret-cloud-storage/
-├── functions/                # Pages Functions (backend API)
+├── src/
+│   └── frontend/             # Frontend source files
+│       ├── index.html
+│       ├── css/
+│       │   └── styles.css
+│       └── js/
+│           └── app.ts
+├── functions/                # Backend (Cloudflare Pages Functions)
 │   ├── _lib/                 # Shared utilities (not routed)
-│   │   ├── handlers/         # Business logic
-│   │   │   ├── upload.ts     # File upload with duplicate detection
-│   │   │   ├── list.ts       # File listing
-│   │   │   ├── download.ts   # File download
-│   │   │   └── delete.ts     # File deletion
+│   │   ├── handlers/
+│   │   │   ├── upload.ts
+│   │   │   ├── list.ts
+│   │   │   ├── download.ts
+│   │   │   └── delete.ts
 │   │   ├── types/
-│   │   │   ├── environment.ts # Environment bindings
-│   │   │   └── file.ts       # File metadata types
+│   │   │   ├── environment.ts
+│   │   │   └── file.ts
 │   │   └── utils/
-│   │       ├── file.ts       # Checksum & metadata utilities
-│   │       └── response.ts   # HTTP response helpers
+│   │       ├── file.ts
+│   │       └── response.ts
 │   └── api/                  # API routes (file-based routing)
 │       ├── upload.ts         # POST /api/upload
 │       └── files/
 │           ├── index.ts      # GET /api/files
 │           └── [key].ts      # GET|DELETE /api/files/:key
-├── public/                   # Frontend static assets
-│   ├── index.html            # Main UI
-│   ├── css/
-│   │   └── styles.css        # Premium dark theme styles
-│   └── js/
-│       ├── app.ts            # Frontend TypeScript
-│       └── app.js            # Compiled JavaScript
-└── wrangler.toml             # Cloudflare Pages configuration
+├── public/                   # Build output (gitignored)
+└── wrangler.toml
 ```
 
 ## Core Logic
@@ -96,10 +97,11 @@ secret-cloud-storage/
 
 ### Scripts
 
-- `bun run build:frontend` - Compile TypeScript frontend to JavaScript
-- `bun run dev` - Build frontend and start local Cloudflare Pages development server
+- `bun run build` - Build frontend (copy assets + compile TypeScript)
+- `bun run dev` - Build and start local Cloudflare Pages development server
 - `bun run deploy` - Build and deploy to Cloudflare Pages
 - `bun run typecheck` - Run TypeScript type checking
+- `bun run clean` - Remove build output
 
 ## API Endpoints
 
