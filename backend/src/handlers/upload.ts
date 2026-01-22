@@ -15,11 +15,14 @@ export async function handleUpload(
 ): Promise<Response> {
 	try {
 		const formData = await request.formData();
-		const file = formData.get('file');
+		const fileEntry = formData.get('file');
 
-		if (!file || typeof file === 'string') {
+		if (!fileEntry || typeof fileEntry === 'string') {
 			return errorResponse('No file provided', 400);
 		}
+
+		// TypeScript type assertion: fileEntry is now File/Blob
+		const file = fileEntry as File;
 
 		// Read file data
 		const arrayBuffer = await file.arrayBuffer();
