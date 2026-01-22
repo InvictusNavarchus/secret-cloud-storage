@@ -5,5 +5,5 @@ dist/
 .env
 *.log
 .DS_Store
-public/js/app.js
-public/js/app.js.map
+frontend/public/js/app.js
+frontend/public/js/app.js.map

@@ -9,5 +9,5 @@ bucket_name = "secret-cloud-storage"
 
 # Assets configuration for serving frontend
 [assets]
-directory = "./public"
+directory = "../frontend/public"
 binding = "ASSETS"

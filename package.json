@@ -4,10 +4,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build:frontend": "bun build public/js/app.ts --outfile=public/js/app.js --target=browser",
-    "dev": "bun run build:frontend && bunx wrangler dev",
-    "deploy": "bun run build:frontend && bunx wrangler deploy",
-    "typecheck": "bunx tsc --noEmit"
+    "build:frontend": "bun build frontend/public/js/app.ts --outfile=frontend/public/js/app.js --target=browser",
+    "dev": "bun run build:frontend && bunx wrangler dev --config backend/wrangler.toml",
+    "deploy": "bun run build:frontend && bunx wrangler deploy --config backend/wrangler.toml",
+    "typecheck": "bunx tsc --noEmit --project backend/tsconfig.json && bunx tsc --noEmit --project frontend/tsconfig.json"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260122.0",
