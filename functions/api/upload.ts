@@ -1,6 +1,6 @@
-import type { Environment } from '../../src/types/environment';
-import { handleUpload } from '../../src/handlers/upload';
-import { corsResponse } from '../../src/utils/response';
+import type { Environment } from '../_lib/types/environment';
+import { handleUpload } from '../_lib/handlers/upload';
+import { corsResponse } from '../_lib/utils/response';
 
 /**
  * POST /api/upload - Upload a file

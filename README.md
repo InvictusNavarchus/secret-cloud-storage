@@ -27,23 +27,23 @@ A secure, personal cloud storage solution built with Cloudflare Pages and R2. De
 ```
 secret-cloud-storage/
 ├── functions/                # Pages Functions (backend API)
-│   └── api/
+│   ├── _lib/                 # Shared utilities (not routed)
+│   │   ├── handlers/         # Business logic
+│   │   │   ├── upload.ts     # File upload with duplicate detection
+│   │   │   ├── list.ts       # File listing
+│   │   │   ├── download.ts   # File download
+│   │   │   └── delete.ts     # File deletion
+│   │   ├── types/
+│   │   │   ├── environment.ts # Environment bindings
+│   │   │   └── file.ts       # File metadata types
+│   │   └── utils/
+│   │       ├── file.ts       # Checksum & metadata utilities
+│   │       └── response.ts   # HTTP response helpers
+│   └── api/                  # API routes (file-based routing)
 │       ├── upload.ts         # POST /api/upload
 │       └── files/
 │           ├── index.ts      # GET /api/files
 │           └── [key].ts      # GET|DELETE /api/files/:key
-├── src/                      # Shared utilities and types
-│   ├── types/
-│   │   ├── environment.ts    # Environment bindings
-│   │   └── file.ts           # File metadata types
-│   ├── utils/
-│   │   ├── file.ts           # Checksum & metadata utilities
-│   │   └── response.ts       # HTTP response helpers
-│   └── handlers/
-│       ├── upload.ts         # File upload with duplicate detection
-│       ├── list.ts           # File listing
-│       ├── download.ts       # File download
-│       └── delete.ts         # File deletion
 ├── public/                   # Frontend static assets
 │   ├── index.html            # Main UI
 │   ├── css/

@@ -1,7 +1,7 @@
-import type { Environment } from '../../../src/types/environment';
-import { handleDownload } from '../../../src/handlers/download';
-import { handleDelete } from '../../../src/handlers/delete';
-import { corsResponse, errorResponse } from '../../../src/utils/response';
+import type { Environment } from '../../_lib/types/environment';
+import { handleDownload } from '../../_lib/handlers/download';
+import { handleDelete } from '../../_lib/handlers/delete';
+import { corsResponse, errorResponse } from '../../_lib/utils/response';
 
 /**
  * GET /api/files/:key - Download a file

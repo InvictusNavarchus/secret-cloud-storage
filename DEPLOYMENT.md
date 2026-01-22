@@ -103,12 +103,15 @@ To update your deployment:
 This project uses **Cloudflare Pages** (not Workers) for a fullstack application:
 
 - **Frontend**: Static assets in `/public` directory
-- **Backend**: Pages Functions in `/functions` directory (file-based routing)
+- **Backend**: Pages Functions in `/functions` directory with file-based routing
+  - `/functions/api/*` - API route handlers (thin routing layer)
+  - `/functions/_lib/*` - Shared business logic, types, and utilities (underscore prefix = not routed)
 - **Storage**: R2 bucket binding
 
 Pages Functions automatically:
 - Serve static assets from `/public`
 - Route API requests based on `/functions` file structure
+- Ignore `_` prefixed folders (they're for shared code only)
 - Handle both frontend and backend in a single deployment
 
 ## Troubleshooting

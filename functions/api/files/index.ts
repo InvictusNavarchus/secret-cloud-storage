@@ -1,6 +1,6 @@
-import type { Environment } from '../../../src/types/environment';
-import { handleList } from '../../../src/handlers/list';
-import { corsResponse } from '../../../src/utils/response';
+import type { Environment } from '../../_lib/types/environment';
+import { handleList } from '../../_lib/handlers/list';
+import { corsResponse } from '../../_lib/utils/response';
 
 /**
  * GET /api/files - List all files
