@@ -71,9 +71,31 @@ export async function mockListFiles(): Promise<ListResponse> {
 }
 
 /**
+ * Compute SHA-256 checksum of a file
+ */
+async function computeChecksum(file: File): Promise<string> {
+	const arrayBuffer = await file.arrayBuffer();
+	const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+/**
  * Mock API: Upload file
  */
 export async function mockUploadFile(file: File): Promise<UploadResponse> {
+	// Compute actual checksum
+	const checksum = await computeChecksum(file);
+	
+	// Check for duplicate checksum (same file content)
+	const duplicate = mockFiles.find((f) => f.checksum === checksum);
+	if (duplicate) {
+		return {
+			success: false,
+			message: `File with identical content already exists as "${duplicate.name}"`,
+		};
+	}
+	
 	// Simulate network delay
 	await new Promise((resolve) => setTimeout(resolve, 800));
 	
@@ -82,11 +104,6 @@ export async function mockUploadFile(file: File): Promise<UploadResponse> {
 	const now = new Date().toISOString();
 	const timestamp = now.replace(/[:.]/g, '-').slice(0, 19);
 	const key = `${file.name.replace(/\.[^/.]+$/, '')}_${timestamp}${file.name.match(/\.[^/.]+$/)?.[0] || ''}`;
-	
-	// Generate mock checksum
-	const checksum = Array.from({ length: 64 }, () => 
-		Math.floor(Math.random() * 16).toString(16)
-	).join('');
 	
 	const newFile: FileInfo = {
 		key,
