@@ -53,14 +53,7 @@ export async function handleUpload(
 			);
 		}
 
-		// Check if filename exists with different content
-		const existingByName = await env.BUCKET.head(file.name);
-		let storageKey = file.name;
-
-		if (existingByName) {
-			// Different file, same name - append timestamp
-			storageKey = generateTimestampedKey(file.name);
-		}
+		const storageKey = generateTimestampedKey(file.name);
 
 		// Store file with metadata
 		const uploadedAt = new Date().toISOString();
