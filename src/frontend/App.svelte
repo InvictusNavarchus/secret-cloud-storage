@@ -2,6 +2,7 @@
 	/// <reference lib="dom" />
 	/// <reference lib="dom.iterable" />
 
+	import type { FileInfo, UploadResponse, ListResponse } from './types.js';
 	import {
 		mockListFiles,
 		mockUploadFile,
@@ -17,30 +18,6 @@
 	const isDev = import.meta.env.DEV;
 
 	// Type definitions
-	interface FileMetadata {
-		readonly name: string;
-		readonly size: number;
-		readonly contentType: string;
-		readonly uploadedAt: string;
-		readonly checksum: string;
-	}
-
-	interface FileInfo extends FileMetadata {
-		readonly key: string;
-	}
-
-	interface UploadResponse {
-		readonly success: boolean;
-		readonly message: string;
-		readonly file?: FileInfo;
-		readonly error?: string;
-	}
-
-	interface ListResponse {
-		readonly files: readonly FileInfo[];
-		readonly count: number;
-	}
-
 	type ToastMessage = {
 		id: number;
 		message: string;
