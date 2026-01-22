@@ -1,7 +1,4 @@
 <script lang="ts">
-	/// <reference lib="dom" />
-	/// <reference lib="dom.iterable" />
-
 	import type { FileInfo, UploadResponse, ListResponse } from './types.js';
 	import {
 		mockListFiles,
