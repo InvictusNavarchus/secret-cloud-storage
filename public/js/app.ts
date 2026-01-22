@@ -1,3 +1,6 @@
+/// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
+
 /**
  * Frontend TypeScript for Secret Cloud Storage
  */
@@ -319,7 +322,7 @@ async function deleteFile(file: FileInfo): Promise<void> {
 			method: 'DELETE',
 		});
 
-		const result = await response.json();
+		const result = (await response.json()) as { success: boolean; error?: string };
 
 		if (result.success) {
 			showToast('File deleted successfully', 'success');

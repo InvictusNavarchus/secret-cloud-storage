@@ -17,7 +17,7 @@ export async function handleUpload(
 		const formData = await request.formData();
 		const file = formData.get('file');
 
-		if (!file || !(file instanceof File)) {
+		if (!file || typeof file === 'string') {
 			return errorResponse('No file provided', 400);
 		}
 
