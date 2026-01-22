@@ -3,11 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun run build:frontend",
-    "build:frontend": "bun run build:frontend:assets && bun run build:frontend:ts",
-    "build:frontend:assets": "mkdir -p public/css public/js && cp src/frontend/index.html public/ && cp -r src/frontend/css/* public/css/",
-    "build:frontend:ts": "bun build src/frontend/js/app.ts --outfile=public/js/app.js --target=browser",
-    "dev": "bun run build && npx wrangler pages dev public",
+    "build": "vite build",
+    "dev": "vite",
+    "dev:pages": "bun run build && npx wrangler pages dev public",
     "deploy": "bun run build && npx wrangler pages deploy public",
     "typecheck": "bunx tsc --noEmit && bunx tsc --noEmit --project tsconfig.frontend.json",
     "clean": "rm -rf public"
@@ -15,6 +13,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260122.0",
     "@types/bun": "latest",
+    "vite": "^7.3.1",
     "wrangler": "^4.59.3"
   },
   "peerDependencies": {
