@@ -1,5 +1,5 @@
 name = "secret-cloud-storage"
-compatibility_date = "2024-01-22"
+compatibility_date = "2026-01-22"
 pages_build_output_dir = "public"
 
 # R2 bucket binding
