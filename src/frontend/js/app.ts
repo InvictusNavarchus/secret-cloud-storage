@@ -1,9 +1,20 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
+/// <reference types="vite/client" />
 
 /**
  * Frontend TypeScript for Secret Cloud Storage
  */
+
+import {
+	mockListFiles,
+	mockUploadFile,
+	mockDeleteFile,
+	mockDownloadFile,
+} from './mockData';
+
+// Development mode detection
+const isDev = import.meta.env.DEV;
 
 // Type definitions
 interface FileMetadata {
@@ -139,15 +150,23 @@ async function uploadFile(file: File): Promise<void> {
 		// Simulate progress (since we can't track actual upload progress easily)
 		animateProgress(0, 90, 500);
 
-		const formData = new FormData();
-		formData.append('file', file);
+		let result: UploadResponse;
 
-		const response = await fetch('/api/upload', {
-			method: 'POST',
-			body: formData,
-		});
+		if (isDev) {
+			// Use mock data in development mode
+			result = await mockUploadFile(file);
+		} else {
+			// Use real API in production
+			const formData = new FormData();
+			formData.append('file', file);
 
-		const result = (await response.json()) as UploadResponse;
+			const response = await fetch('/api/upload', {
+				method: 'POST',
+				body: formData,
+			});
+
+			result = (await response.json()) as UploadResponse;
+		}
 
 		// Complete progress
 		animateProgress(90, 100, 100);
@@ -156,7 +175,7 @@ async function uploadFile(file: File): Promise<void> {
 			showToast(result.message, 'success');
 			await loadFiles();
 		} else {
-			showToast(result.message || result.error || 'Upload failed', response.status === 409 ? 'warning' : 'error');
+			showToast(result.message || result.error || 'Upload failed', !isDev && result.error ? 'warning' : 'error');
 		}
 	} catch (error) {
 		console.error('Upload error:', error);
@@ -193,8 +212,16 @@ function animateProgress(from: number, to: number, duration: number): void {
  */
 async function loadFiles(): Promise<void> {
 	try {
-		const response = await fetch('/api/files');
-		const data = (await response.json()) as ListResponse;
+		let data: ListResponse;
+
+		if (isDev) {
+			// Use mock data in development mode
+			data = await mockListFiles();
+		} else {
+			// Use real API in production
+			const response = await fetch('/api/files');
+			data = (await response.json()) as ListResponse;
+		}
 
 		if (data.files.length === 0) {
 			elements.filesList.innerHTML = '';
@@ -294,13 +321,32 @@ function createFileCard(file: FileInfo): string {
  */
 async function downloadFile(file: FileInfo): Promise<void> {
 	try {
-		const url = `/api/files/${encodeURIComponent(file.key)}`;
+		let url: string;
+
+		if (isDev) {
+			// Use mock data in development mode
+			const mockUrl = await mockDownloadFile(file.key);
+			if (!mockUrl) {
+				showToast('File not found', 'error');
+				return;
+			}
+			url = mockUrl;
+		} else {
+			// Use real API in production
+			url = `/api/files/${encodeURIComponent(file.key)}`;
+		}
+
 		const link = document.createElement('a');
 		link.href = url;
 		link.download = file.name;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
+
+		// Clean up blob URL if in dev mode
+		if (isDev) {
+			setTimeout(() => URL.revokeObjectURL(url), 100);
+		}
 
 		showToast(`Downloading ${file.name}`, 'success');
 	} catch (error) {
@@ -318,14 +364,22 @@ async function deleteFile(file: FileInfo): Promise<void> {
 	}
 
 	try {
-		const response = await fetch(`/api/files/${encodeURIComponent(file.key)}`, {
-			method: 'DELETE',
-		});
+		let result: { success: boolean; message?: string; error?: string };
 
-		const result = (await response.json()) as { success: boolean; error?: string };
+		if (isDev) {
+			// Use mock data in development mode
+			result = await mockDeleteFile(file.key);
+		} else {
+			// Use real API in production
+			const response = await fetch(`/api/files/${encodeURIComponent(file.key)}`, {
+				method: 'DELETE',
+			});
+
+			result = (await response.json()) as { success: boolean; error?: string };
+		}
 
 		if (result.success) {
-			showToast('File deleted successfully', 'success');
+			showToast(result.message || 'File deleted successfully', 'success');
 			await loadFiles();
 		} else {
 			showToast(result.error || 'Failed to delete file', 'error');
