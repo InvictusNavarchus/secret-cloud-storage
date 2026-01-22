@@ -37,7 +37,7 @@ This compiles the TypeScript frontend to JavaScript.
 ### 4. Test Deployment (Dry Run)
 
 ```bash
-bunx wrangler deploy --dry-run
+bunx wrangler pages deploy public --dry-run
 ```
 
 This verifies your configuration without actually deploying.
@@ -51,10 +51,10 @@ bun run deploy
 Or manually:
 
 ```bash
-bunx wrangler deploy
+bunx wrangler pages deploy public
 ```
 
-Wrangler will output your Worker URL, e.g., `https://secret-cloud-storage.your-subdomain.workers.dev`
+Wrangler will output your Pages URL, e.g., `https://secret-cloud-storage.pages.dev`
 
 ### 6. Configure Cloudflare Access
 
@@ -66,7 +66,7 @@ To secure your cloud storage:
 4. Select **Self-hosted**
 5. Configure:
    - **Application name**: Secret Cloud Storage
-   - **Application domain**: Your Worker URL
+   - **Application domain**: Your Pages URL
    - **Session duration**: As desired
 6. Add an **Access Policy**:
    - **Policy name**: Personal Access
@@ -86,7 +86,7 @@ To test locally:
 bun run dev
 ```
 
-This will start a local development server at `http://localhost:8787`
+This will start a local Cloudflare Pages development server at `http://localhost:8788`
 
 **Note**: R2 bucket access requires authentication even in local dev mode.
 
@@ -97,6 +97,19 @@ To update your deployment:
 1. Make your changes
 2. Build frontend if changed: `bun run build:frontend`
 3. Deploy: `bun run deploy`
+
+## Architecture Notes
+
+This project uses **Cloudflare Pages** (not Workers) for a fullstack application:
+
+- **Frontend**: Static assets in `/public` directory
+- **Backend**: Pages Functions in `/functions` directory (file-based routing)
+- **Storage**: R2 bucket binding
+
+Pages Functions automatically:
+- Serve static assets from `/public`
+- Route API requests based on `/functions` file structure
+- Handle both frontend and backend in a single deployment
 
 ## Troubleshooting
 

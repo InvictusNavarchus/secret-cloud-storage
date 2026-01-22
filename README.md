@@ -1,6 +1,6 @@
 # Secret Cloud Storage
 
-A secure, personal cloud storage solution built with Cloudflare Workers and R2. Designed for easy file transfer between devices without the hassle of VPNs or tunnels.
+A secure, personal cloud storage solution built with Cloudflare Pages and R2. Designed for easy file transfer between devices without the hassle of VPNs or tunnels.
 
 ## Features
 
@@ -17,7 +17,7 @@ A secure, personal cloud storage solution built with Cloudflare Workers and R2. 
 ### Tech Stack
 
 - **Frontend**: Pure HTML, CSS, TypeScript (no frameworks)
-- **Backend**: Cloudflare Workers with TypeScript
+- **Backend**: Cloudflare Pages Functions with TypeScript
 - **Storage**: Cloudflare R2
 - **Package Manager**: Bun
 - **Security**: Cloudflare Access
@@ -26,8 +26,13 @@ A secure, personal cloud storage solution built with Cloudflare Workers and R2. 
 
 ```
 secret-cloud-storage/
-├── src/
-│   ├── index.ts              # Main Worker entry point
+├── functions/                # Pages Functions (backend API)
+│   └── api/
+│       ├── upload.ts         # POST /api/upload
+│       └── files/
+│           ├── index.ts      # GET /api/files
+│           └── [key].ts      # GET|DELETE /api/files/:key
+├── src/                      # Shared utilities and types
 │   ├── types/
 │   │   ├── environment.ts    # Environment bindings
 │   │   └── file.ts           # File metadata types
@@ -39,14 +44,14 @@ secret-cloud-storage/
 │       ├── list.ts           # File listing
 │       ├── download.ts       # File download
 │       └── delete.ts         # File deletion
-├── public/
+├── public/                   # Frontend static assets
 │   ├── index.html            # Main UI
 │   ├── css/
 │   │   └── styles.css        # Premium dark theme styles
 │   └── js/
 │       ├── app.ts            # Frontend TypeScript
 │       └── app.js            # Compiled JavaScript
-└── wrangler.toml             # Cloudflare Workers configuration
+└── wrangler.toml             # Cloudflare Pages configuration
 ```
 
 ## Core Logic
@@ -65,7 +70,7 @@ secret-cloud-storage/
 ### Prerequisites
 
 - [Bun](https://bun.sh/) for package management
-- [Wrangler](https://developers.cloudflare.com/workers/wrangler/) for Cloudflare Workers
+- [Wrangler](https://developers.cloudflare.com/workers/wrangler/) for Cloudflare Pages
 - Cloudflare account with R2 enabled
 
 ### Setup
@@ -92,8 +97,8 @@ secret-cloud-storage/
 ### Scripts
 
 - `bun run build:frontend` - Compile TypeScript frontend to JavaScript
-- `bun run dev` - Build frontend and start local development server
-- `bun run deploy` - Build and deploy to Cloudflare Workers
+- `bun run dev` - Build frontend and start local Cloudflare Pages development server
+- `bun run deploy` - Build and deploy to Cloudflare Pages
 - `bun run typecheck` - Run TypeScript type checking
 
 ## API Endpoints
@@ -169,7 +174,7 @@ DELETE /api/files/:key
 
 3. **Configure Cloudflare Access**:
    - Go to Cloudflare Dashboard → Zero Trust → Access
-   - Create an application for your Worker URL
+   - Create an application for your Pages URL
    - Configure authentication (email, Google, etc.)
 
 ## Security
@@ -183,7 +188,7 @@ DELETE /api/files/:key
 
 The codebase follows best practices:
 
-- **Separation of Concerns**: Clear separation between handlers, utilities, and types
+- **Separation of Concerns**: Clear separation between Pages Functions, handlers, utilities, and types
 - **DRY**: No code duplication
 - **KISS**: Simple, straightforward implementations
 - **High Cohesion, Low Coupling**: Each module has a single responsibility

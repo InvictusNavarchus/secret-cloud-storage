@@ -1,13 +1,8 @@
 name = "secret-cloud-storage"
-main = "src/index.ts"
 compatibility_date = "2024-01-22"
+pages_build_output_dir = "public"
 
 # R2 bucket binding
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "secret-cloud-storage"
-
-# Assets configuration for serving frontend
-[assets]
-directory = "../frontend/public"
-binding = "ASSETS"
