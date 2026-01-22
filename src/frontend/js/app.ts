@@ -267,33 +267,24 @@ function createFileCard(file: FileInfo): string {
 
 	return `
 		<div class="file-card">
-			<div class="file-icon">
-				${getFileIcon(file.contentType)}
-			</div>
 			<div class="file-info">
-				<div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
-				<div class="file-meta">
-					<span class="file-meta-item">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-						</svg>
-						${formattedSize}
-					</span>
-					<span class="file-meta-item">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<circle cx="12" cy="12" r="10"/>
-							<polyline points="12 6 12 12 16 14"/>
-						</svg>
-						${formattedDate}
-					</span>
-					<span class="file-meta-item" title="SHA-256: ${file.checksum}">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-							<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-						</svg>
-						${file.checksum.substring(0, 8)}...
-					</span>
+				<div class="file-icon">
+					${getFileIcon(file.contentType)}
 				</div>
+				<div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
+			</div>
+			<div class="file-meta">
+				${formattedSize}
+			</div>
+			<div class="file-meta">
+				${formattedDate}
+			</div>
+			<div class="file-meta file-meta-item" title="SHA-256: ${file.checksum}">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+					<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+				</svg>
+				${file.checksum.substring(0, 8)}...
 			</div>
 			<div class="file-actions">
 				<button class="btn btn-primary" id="download-${encodedKey}" aria-label="Download ${escapeHtml(file.name)}">

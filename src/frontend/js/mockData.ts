@@ -77,16 +77,8 @@ export async function mockUploadFile(file: File): Promise<UploadResponse> {
 	// Simulate network delay
 	await new Promise((resolve) => setTimeout(resolve, 800));
 	
-	// Check for duplicate
-	const exists = mockFiles.some((f) => f.name === file.name);
-	if (exists) {
-		return {
-			success: false,
-			message: `File "${file.name}" already exists`,
-		};
-	}
-	
 	// Create mock file info
+	// Note: Duplicate file names are allowed, keys are made unique with timestamps
 	const now = new Date().toISOString();
 	const timestamp = now.replace(/[:.]/g, '-').slice(0, 19);
 	const key = `${file.name.replace(/\.[^/.]+$/, '')}_${timestamp}${file.name.match(/\.[^/.]+$/)?.[0] || ''}`;
