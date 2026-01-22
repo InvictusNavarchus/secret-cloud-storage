@@ -9,7 +9,6 @@
 		mockDeleteFile,
 		mockDownloadFile,
 	} from './utils/mockData.js';
-	import { formatBytes, formatDate } from './utils/helpers.js';
 	import FileCard from './components/FileCard.svelte';
 	import Toast from './components/Toast.svelte';
 	import UploadArea from './components/UploadArea.svelte';
