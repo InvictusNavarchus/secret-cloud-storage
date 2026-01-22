@@ -3,29 +3,7 @@
  * Uses the exact same types as production
  */
 
-interface FileMetadata {
-	readonly name: string;
-	readonly size: number;
-	readonly contentType: string;
-	readonly uploadedAt: string;
-	readonly checksum: string;
-}
-
-interface FileInfo extends FileMetadata {
-	readonly key: string;
-}
-
-interface UploadResponse {
-	readonly success: boolean;
-	readonly message: string;
-	readonly file?: FileInfo;
-	readonly error?: string;
-}
-
-interface ListResponse {
-	readonly files: readonly FileInfo[];
-	readonly count: number;
-}
+import type { FileInfo, UploadResponse, ListResponse } from '../types.js';
 
 /**
  * Mock file storage
@@ -100,7 +78,6 @@ export async function mockUploadFile(file: File): Promise<UploadResponse> {
 	await new Promise((resolve) => setTimeout(resolve, 800));
 	
 	// Create mock file info
-	// Note: Duplicate file names are allowed, keys are made unique with timestamps
 	const now = new Date().toISOString();
 	const timestamp = now.replace(/[:.]/g, '-').slice(0, 19);
 	const key = `${file.name.replace(/\.[^/.]+$/, '')}_${timestamp}${file.name.match(/\.[^/.]+$/)?.[0] || ''}`;
