@@ -1,0 +1,83 @@
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;Secret Cloud Storage&lt;/title&gt;
+	&lt;meta name="description" content="Secure personal cloud storage for easy file transfer between devices"&gt;
+	&lt;link rel="stylesheet" href="/css/styles.css"&gt;
+	&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+	&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+	&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;div class="container"&gt;
+		&lt;header class="header"&gt;
+			&lt;h1 class="title"&gt;
+				&lt;svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+					&lt;path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/&gt;
+				&lt;/svg&gt;
+				Secret Cloud Storage
+			&lt;/h1&gt;
+			&lt;p class="subtitle"&gt;Secure file transfer between your devices&lt;/p&gt;
+		&lt;/header&gt;
+
+		&lt;main class="main"&gt;
+			&lt;!-- Upload Section --&gt;
+			&lt;section class="upload-section"&gt;
+				&lt;div class="upload-area" id="uploadArea"&gt;
+					&lt;div class="upload-icon"&gt;
+						&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+							&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;
+							&lt;polyline points="17 8 12 3 7 8"/&gt;
+							&lt;line x1="12" y1="3" x2="12" y2="15"/&gt;
+						&lt;/svg&gt;
+					&lt;/div&gt;
+					&lt;h2 class="upload-title"&gt;Drop files here or click to upload&lt;/h2&gt;
+					&lt;p class="upload-desc"&gt;Supports all file types&lt;/p&gt;
+					&lt;input type="file" id="fileInput" class="file-input" multiple&gt;
+				&lt;/div&gt;
+
+				&lt;!-- Upload Progress --&gt;
+				&lt;div class="upload-progress" id="uploadProgress" style="display: none;"&gt;
+					&lt;div class="progress-bar"&gt;
+						&lt;div class="progress-fill" id="progressFill"&gt;&lt;/div&gt;
+					&lt;/div&gt;
+					&lt;p class="progress-text" id="progressText"&gt;&lt;/p&gt;
+				&lt;/div&gt;
+			&lt;/section&gt;
+
+			&lt;!-- Files Section --&gt;
+			&lt;section class="files-section"&gt;
+				&lt;div class="section-header"&gt;
+					&lt;h2 class="section-title"&gt;Your Files&lt;/h2&gt;
+					&lt;button class="refresh-btn" id="refreshBtn" aria-label="Refresh file list"&gt;
+						&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+							&lt;polyline points="23 4 23 10 17 10"/&gt;
+							&lt;polyline points="1 20 1 14 7 14"/&gt;
+							&lt;path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/&gt;
+						&lt;/svg&gt;
+					&lt;/button&gt;
+				&lt;/div&gt;
+
+				&lt;div class="files-list" id="filesList"&gt;
+					&lt;!-- Files will be populated here --&gt;
+				&lt;/div&gt;
+
+				&lt;div class="empty-state" id="emptyState"&gt;
+					&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+						&lt;path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/&gt;
+						&lt;polyline points="13 2 13 9 20 9"/&gt;
+					&lt;/svg&gt;
+					&lt;p&gt;No files yet. Upload your first file to get started!&lt;/p&gt;
+				&lt;/div&gt;
+			&lt;/section&gt;
+		&lt;/main&gt;
+
+		&lt;!-- Toast Notifications --&gt;
+		&lt;div class="toast-container" id="toastContainer"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;script type="module" src="/js/app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

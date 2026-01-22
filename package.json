@@ -1,0 +1,20 @@
+{
+  "name": "secret-cloud-storage",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build:frontend": "bun build public/js/app.ts --outfile=public/js/app.js --target=browser",
+    "dev": "bun run build:frontend && bunx wrangler dev",
+    "deploy": "bun run build:frontend && bunx wrangler deploy",
+    "typecheck": "bunx tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260122.0",
+    "@types/bun": "latest",
+    "wrangler": "^4.59.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

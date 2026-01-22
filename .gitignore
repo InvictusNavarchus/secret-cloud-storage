@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+.env
+*.log
+.DS_Store
+public/js/app.js
+public/js/app.js.map
