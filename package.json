@@ -7,8 +7,8 @@
     "build:frontend": "bun run build:frontend:assets && bun run build:frontend:ts",
     "build:frontend:assets": "mkdir -p public/css public/js && cp src/frontend/index.html public/ && cp -r src/frontend/css/* public/css/",
     "build:frontend:ts": "bun build src/frontend/js/app.ts --outfile=public/js/app.js --target=browser",
-    "dev": "bun run build && bunx wrangler pages dev public",
-    "deploy": "bun run build && bunx wrangler pages deploy public",
+    "dev": "bun run build && npx wrangler pages dev public",
+    "deploy": "bun run build && npx wrangler pages deploy public",
     "typecheck": "bunx tsc --noEmit && bunx tsc --noEmit --project tsconfig.frontend.json",
     "clean": "rm -rf public"
   },

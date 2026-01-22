@@ -11,7 +11,7 @@
 ### 1. Login to Cloudflare
 
 ```bash
-bunx wrangler login
+npx wrangler login
 ```
 
 This will open a browser window for you to authenticate.
@@ -37,7 +37,7 @@ This copies static assets and compiles TypeScript to the `public/` directory.
 ### 4. Test Deployment (Dry Run)
 
 ```bash
-bunx wrangler pages deploy public --dry-run
+npx wrangler pages deploy public --dry-run
 ```
 
 This verifies your configuration without actually deploying.
@@ -51,7 +51,7 @@ bun run deploy
 Or manually:
 
 ```bash
-bunx wrangler pages deploy public
+npx wrangler pages deploy public
 ```
 
 Wrangler will output your Pages URL, e.g., `https://secret-cloud-storage.pages.dev`
@@ -126,7 +126,7 @@ Ensure:
 
 ### Authentication Errors
 
-- Run `bunx wrangler login` again
+- Run `npx wrangler login` again
 - Check your Cloudflare API token has proper permissions
 
 ### Build Errors

@@ -166,7 +166,7 @@ DELETE /api/files/:key
 
 1. **Login to Cloudflare**:
    ```bash
-   bunx wrangler login
+   npx wrangler login
    ```
 
 2. **Deploy**:
